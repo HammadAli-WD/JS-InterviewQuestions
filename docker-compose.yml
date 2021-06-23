@@ -15,7 +15,8 @@ services:
       - ./src:/app/src
     ports:
       - "8000:8000"
-    depends_on: -db
+    depends_on:
+      - db
     environment:
       - POSTGRES_DB=typescript-js
       - POSTGRES_USER=postgres
