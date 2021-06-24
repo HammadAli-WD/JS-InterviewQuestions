@@ -1,13 +1,10 @@
-import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    UpdateDateColumn
-} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, UpdateDateColumn} from "typeorm";
+import { Post } from "./post";
+import {Comment} from './comment';
 
 @Entity()
 export class User {
+
     @PrimaryGeneratedColumn()
     id!: number;
 
@@ -20,6 +17,12 @@ export class User {
     @Column()
     email!: string;
 
+    @OneToMany(_type => Post, (post: Post) => post.user)
+    posts!: Array<Post>
+
+    @OneToMany(_type=> Comment, (comment: Comment) => comment.user)
+    comments!: Array<Comment>;
+    
     @CreateDateColumn()
     createdAt!: Date;
 
