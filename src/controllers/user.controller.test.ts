@@ -1,6 +1,10 @@
 import UserController from './user.controller';
 import * as UserRepository from "../repositories/user.repository";
+import {generateUsersData} from '../../test/utils/generate'
 
+afterEach(() => {
+    jest.resetAllMocks()
+})
 describe('UserController', () => {
     describe('getUsers', () => {
         test('should return empty array', async () => {
@@ -15,27 +19,16 @@ describe('UserController', () => {
             spy.mockRestore();
         });
         test('should return user list', async () => {
-            const usersList = [
-                {
-                    id: 1,
-                    firstName: "firstName",
-                    lastName: "lastName",
-                    email: "email@example.com",
-                    posts: [],
-                    comments: [],
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                }
-            ]
+            const usersData = generateUsersData(2);
             const spy = jest
                 .spyOn(UserRepository, "getUsers")
-                .mockResolvedValueOnce(usersList)
+                .mockResolvedValueOnce(usersData)
             const controller = new UserController();
             const users = await controller.getUsers();
-            expect(users).toEqual(usersList);
+            expect(users).toEqual(usersData);
             expect(spy).toHaveBeenCalledWith();
             expect(spy).toHaveBeenCalledTimes(1);
-            spy.mockRestore()
+            //spy.mockRestore()
         })
         
     });    
