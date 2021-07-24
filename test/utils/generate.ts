@@ -24,3 +24,11 @@ export function generateUsersData(n: number = 1, overide = {}) {
     }
   );
 }
+
+export function generateUserPayload() {
+  return {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    email: faker.internet.email()
+  }
+}
